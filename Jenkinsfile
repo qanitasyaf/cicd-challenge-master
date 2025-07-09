@@ -7,15 +7,15 @@ pipeline {
  
   environment {
     SONARQUBE_SERVER = 'SonarQube' 
-    IMAGE_NAME = 'cicd-challenge'
+    IMAGE_NAME = 'challenge-lastday'
     IMAGE_TAG = 'latest'
     DOCKERFILE_BUILD_PATH = 'dockerbuild/Dockerfile'
-    DOCKERHUB_USER = 'oeuvre13'
+    DOCKERHUB_USER = 'bentarlagiaja'
     TF_DIR = 'terraform'
     GOOGLE_APPLICATION_CREDENTIALS = 'gcp-key.json'
     GOOGLE_PROJECT = 'rakamin-ttc-odp-it-4'
-    TELEGRAM_BOT_TOKEN = '8029797501:AAHvAp4KV1KUabDAFN-Kalc58MDKm1sgQyc'
-    TELEGRAM_CHAT_ID = '2052628431'
+    TELEGRAM_BOT_TOKEN = '7737408450:AAHu8ycMTpUr6LMxPSZJ1qgqwkv8xLneU4Q'
+    TELEGRAM_CHAT_ID = '1330543866'
   }
  
   stages {
@@ -39,11 +39,11 @@ pipeline {
     stage('Static Code Analysis (SAST) via Sonar') {
       steps {
         sh """
-            mvn clean compile sonar:sonar \
-              -Dsonar.projectKey=cicd-challenge \
-              -Dsonar.projectName='cicd-challenge' \
+            mvn clean verify sonar:sonar \
+              -Dsonar.projectKey=learning1 \
+              -Dsonar.projectName='learning1' \
               -Dsonar.host.url=http://sonarqube:9000 \
-              -Dsonar.token=sqp_4ee12ac68f34739ce6ef24d45e5e409f34ad7f53
+              -Dsonar.token=sqp_a8c2e0f59d6881f69c6cc61c4c849a400f2a645a3
         """
       }
     }
