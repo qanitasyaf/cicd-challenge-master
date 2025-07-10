@@ -13,7 +13,7 @@ pipeline {
     DOCKERHUB_USER = 'bentarlagiaja'
     TF_DIR = 'terraform'
     GOOGLE_APPLICATION_CREDENTIALS = 'gcp-key.json'
-    GOOGLE_PROJECT = 'rakamin-ttc-odp-it-4'
+    GOOGLE_PROJECT = 'final-project-bootcamp'
     TELEGRAM_BOT_TOKEN = '7737408450:AAHu8ycMTpUr6LMxPSZJ1qgqwkv8xLneU4Q'
     TELEGRAM_CHAT_ID = '1330543866'
   }
@@ -21,7 +21,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git url: 'https://github.com/oeuvre13/cicd-challenge', branch: 'master'
+        git url: 'https://github.com/qanitasyaf/spring-boot-unit-test-rest-controller', branch: 'main'
       }
     }
  
@@ -39,11 +39,11 @@ pipeline {
     stage('Static Code Analysis (SAST) via Sonar') {
       steps {
         sh """
-            mvn clean verify sonar:sonar \
-              -Dsonar.projectKey=learning1 \
-              -Dsonar.projectName='learning1' \
-              -Dsonar.host.url=http://sonarqube:9000 \
-              -Dsonar.token=sqp_a8c2e0f59d6881f69c6cc61c4c849a400f2a645a3
+        mvn clean verify sonar:sonar \
+          -Dsonar.projectKey=learning-1 \
+          -Dsonar.projectName='learning-1' \
+          -Dsonar.host.url=http://sonarqube:9000 \
+          -Dsonar.token=sqp_0f261f79816784461903b5ae9c0985cc75c10d09
         """
       }
     }
@@ -61,8 +61,8 @@ pipeline {
         steps {
             withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                 sh """
-                echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                    docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
